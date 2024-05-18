@@ -2,7 +2,14 @@
 
 Welcome to Metaframer, the ultimate tool for automatically integrating metadata into stylish frames for your images. Use Metaframer to enhance the display of images in videos, digital galleries, presentations, and much more. Our easy-to-use features allow for dynamic, customizable, and visually appealing frame generation.
 
-## Features
+##
+
+- Should be able to create frames to be displayed horizontally || vertically
+- Should display certian metadata information such as focal length, Camera model, shutter speed, ISO and aperture
+- Should be configurable (background, font, size)
+- Should be able to batch process multiple images at once (with any CLI tool)
+
+## Possible Features
 
 - **Automated Frame Creation:** Generates frames with metadata from images automatically.
 - **Customizable Designs:** Multiple frame designs to match your project's style.
