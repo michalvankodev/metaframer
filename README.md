@@ -8,8 +8,6 @@ Welcome to Metaframer, the ultimate tool for automatically integrating metadata 
 - **Customizable Designs:** Multiple frame designs to match your project's style.
 - **Dynamic Metadata Integration:** Automatically displays metadata such as date, location, camera settings.
 - **Flexible Customization:** Adjustable fonts, colors, and opacity.
-- **Broad Compatibility:** Works with a wide array of image formats and video editing software.
-- **Real-Time Preview:** Edit and see changes in real-time.
 - **Batch Processing:** Create consistent frames to multiple images at once.
 - **Resolution Independence:** High-quality output regardless of image resolution.
 - **Multiple Export Options:** Easy exportation in various formats.
