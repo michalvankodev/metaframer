@@ -10,14 +10,15 @@ Welcome to Metaframer, the ultimate tool for automatically integrating metadata 
 - **Flexible Customization:** Adjustable fonts, colors, and opacity.
 - **Broad Compatibility:** Works with a wide array of image formats and video editing software.
 - **Real-Time Preview:** Edit and see changes in real-time.
-- **Batch Processing:** Apply consistent frames to multiple images at once.
+- **Batch Processing:** Create consistent frames to multiple images at once.
 - **Resolution Independence:** High-quality output regardless of image resolution.
 - **Multiple Export Options:** Easy exportation in various formats.
-- **User-Friendly Interface:** Accessible for users of all skill levels.
 
 ## Installation
 
 To get started with Metaframer, follow these simple installation steps:
+
+<!-- TODO -->
 
 ## Usage
 
