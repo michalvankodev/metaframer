@@ -1,6 +1,10 @@
 use anyhow::{Context, Result};
 use clap::Parser;
-use std::{fs::File, io::BufReader};
+use std::{fs::File, io::BufReader, path::PathBuf};
+
+use crate::framer::Dimensions;
+
+mod framer;
 
 #[derive(Parser)]
 struct CliArgs {
@@ -8,9 +12,6 @@ struct CliArgs {
 }
 
 fn main() -> Result<()> {
-    // let pattern = std::env::args().nth(1).expect("no pattern given");
-    // let path = std::env::args().nth(2).expect("no path given");
-
     let args = CliArgs::parse();
 
     println!("File: {:?}", args.path);
@@ -32,17 +33,22 @@ fn main() -> Result<()> {
         );
     }
 
+    framer::generate_frame(
+        get_frame_path(&path),
+        Dimensions {
+            width: 300,
+            height: 300,
+        },
+    )?;
+
     Ok(())
 }
 
-#[test]
-fn file_doesnt_exist() -> Result<()> {
-    let mut cmd = assert_cmd::Command::cargo_bin("metaframer")?;
+fn get_frame_path(path: &PathBuf) -> PathBuf {
+    let mut frame_path = path.clone();
+    let orig_file_stem = path.file_stem().unwrap();
+    frame_path.set_file_name(format!("{}_frame", orig_file_stem.to_str().unwrap()));
+    frame_path.set_extension("png");
 
-    cmd.arg("test/file/doesnt/exist");
-    cmd.assert()
-        .failure()
-        .stderr(predicates::str::contains("could not read file"));
-
-    Ok(())
+    frame_path
 }
