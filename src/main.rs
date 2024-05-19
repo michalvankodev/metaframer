@@ -34,3 +34,15 @@ fn main() -> Result<()> {
 
     Ok(())
 }
+
+#[test]
+fn file_doesnt_exist() -> Result<()> {
+    let mut cmd = assert_cmd::Command::cargo_bin("metaframer")?;
+
+    cmd.arg("test/file/doesnt/exist");
+    cmd.assert()
+        .failure()
+        .stderr(predicates::str::contains("could not read file"));
+
+    Ok(())
+}
