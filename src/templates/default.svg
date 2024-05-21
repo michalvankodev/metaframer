@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg viewBox="0 0 {{width}} 50" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+  <style id="style1">
+    .info {
+      font-style: normal;
+      font-variant: normal;
+      font-weight: 500;
+      font-stretch: normal;
+      font-size: 28px;
+      line-heigth: 28px;
+      font-family: 'IntelOne Mono';
+      fill: #375978;
+    }
+  </style>
+  <rect width="100%" height="100%" fill="#ffffff"></rect> 
+  <image preserveAspectRatio="none" width="30" height="30" xlink:href="assets/g_camera.svg" id="image1" x="10" y="10" />
+  <text x="380" y="35" class="info">
+    {{aperture}}
+  </text>
+  <image preserveAspectRatio="none" width="30" height="30" xlink:href="assets/g_aperture.svg" id="image1-3" x="340.00" y="10" />
+  <text x="50" y="35" class="info">
+   {{camera}}
+  </text>
+  <image preserveAspectRatio="none" width="30" height="30" xlink:href="assets/g_shutter-speed.svg" id="image1-3" x="520.00" y="10" />
+  <text x="560" y="35" class="info">
+   {{shutter_speed}}
+  </text>
+  <image preserveAspectRatio="none" width="30" height="30" xlink:href="assets/g_lens.svg" id="image1-3" x="680.00" y="10" />
+  <text x="720" y="35" class="info">
+   {{focal_length}}
+  </text>
+</svg>
+<!-- TODO Images have to be inlined -->

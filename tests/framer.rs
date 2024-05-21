@@ -8,9 +8,9 @@ fn generates_frame() -> Result<()> {
     let mut cmd = Command::cargo_bin("metaframer")?;
 
     cmd.arg("tests/assets/image.jpg");
-    assert!(Path::new("tests/assets/image_frame.png").exists());
+    assert!(Path::new("tests/assets/image_frame.svg").exists());
 
     // Clean up
-    fs::remove_file("tests/assets/image_frame.png").unwrap();
+    fs::remove_file("tests/assets/image_frame.svg").unwrap();
     Ok(())
 }
