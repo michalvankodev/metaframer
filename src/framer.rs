@@ -54,8 +54,16 @@ fn get_camera(exif: &Exif) -> String {
     match (brand, model) {
         (Some(brand), Some(model)) => format!(
             "{} {}",
-            brand.display_value().with_unit(exif),
-            model.display_value().with_unit(exif)
+            brand
+                .display_value()
+                .with_unit(exif)
+                .to_string()
+                .trim_matches('"'),
+            model
+                .display_value()
+                .with_unit(exif)
+                .to_string()
+                .trim_matches('"')
         ),
         _ => "N/A".to_string(),
     }
