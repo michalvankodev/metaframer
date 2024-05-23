@@ -8,8 +8,9 @@ pub struct FrameData {
     pub shutter_speed: String,
     pub aperture: String,
     pub focal_length: String,
+    pub iso: String,
     pub camera: String,
-    // pub aperture: String;
+    // pub lens: String,
 }
 
 // TODO Calculate width according to the aspect ratio of the image?
@@ -20,6 +21,8 @@ pub fn get_frame_data(_width: u32, exif: &Exif) -> Result<FrameData, anyhow::Err
         aperture: get_aperture(&exif),
         focal_length: get_focal_length(&exif),
         camera: get_camera(&exif),
+        iso: get_iso(&exif),
+        // lens: get_lens(&exif),
     })
 }
 
@@ -47,6 +50,14 @@ fn get_focal_length(exif: &Exif) -> String {
     }
 }
 
+fn get_iso(exif: &Exif) -> String {
+    let field = exif.get_field(Tag::PhotographicSensitivity, In::PRIMARY);
+    match field {
+        Some(value) => format!("{}", value.display_value().with_unit(exif)),
+        None => "N/A".to_string(),
+    }
+}
+
 fn get_camera(exif: &Exif) -> String {
     let brand = exif.get_field(Tag::Make, In::PRIMARY);
     let model = exif.get_field(Tag::Model, In::PRIMARY);
@@ -68,3 +79,8 @@ fn get_camera(exif: &Exif) -> String {
         _ => "N/A".to_string(),
     }
 }
+
+// TODO
+// 1. Width of the generated frame
+// 2. How to scale / wrap information when width is not enough
+// 3. How to display values in order rather than just fixed positions
