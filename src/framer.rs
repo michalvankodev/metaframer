@@ -13,10 +13,9 @@ pub struct FrameData {
     // pub lens: String,
 }
 
-// TODO Calculate width according to the aspect ratio of the image?
-pub fn get_frame_data(_width: u32, exif: &Exif) -> Result<FrameData, anyhow::Error> {
+pub fn get_frame_data(width: u32, exif: &Exif) -> Result<FrameData, anyhow::Error> {
     Ok(FrameData {
-        width: 1000,
+        width,
         shutter_speed: get_shutter_speed(&exif),
         aperture: get_aperture(&exif),
         focal_length: get_focal_length(&exif),
