@@ -65,7 +65,7 @@ fn main() -> Result<()> {
     let dimensions = image::image_dimensions(path.clone())?;
     let excluded_height = if args.inset { 0 } else { args.frame_height };
     let frame_width = get_frame_width(args.resolution, args.portrait, dimensions, excluded_height);
-    let frame_data = framer::get_frame_data(frame_width, &exif)?;
+    let frame_data = framer::get_frame_data((frame_width, args.frame_height as u32), &exif)?;
 
     let mut output_file = File::create(get_frame_path(&path))?;
     handlebars.render_to_write("default", &frame_data, &mut output_file)?;

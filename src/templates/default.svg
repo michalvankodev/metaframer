@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg viewBox="0 0 {{width}} 40" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 {{ width }} {{ height }}" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
   <style id="style1">
     .info {
       font-style: normal;
@@ -12,40 +12,40 @@
       fill: #375978;
     }
   </style>
-  <rect width="{width}" height="40" fill="#ffffff"></rect> 
+  <rect width="{{width}}" height="{{height}}" fill="#ffffff"></rect> 
   <g>
-    <image preserveAspectRatio="none" width="30" height="30" xlink:href="assets/g_camera.svg" id="image1" x="10" y="10" />
-    <text x="50" y="35" class="info">
+    <image preserveAspectRatio="none" width="30" height="30" xlink:href="assets/g_camera.svg" id="image1" x="10" y="5" />
+    <text x="50" y="27" class="info">
      {{camera}}
     </text>
   </g>
   <!-- <g> -->
-    <!-- <image preserveAspectRatio="none" width="30" height="30" xlink:href="assets/g_lens.svg" id="image1" x="10" y="10" /> -->
-    <!-- <text x="50" y="35" class="info"> -->
+    <!-- <image preserveAspectRatio="none" width="30" height="30" xlink:href="assets/g_lens.svg" id="image1" x="10" y="5" /> -->
+    <!-- <text x="50" y="27" class="info"> -->
      <!-- {{lens}} -->
     <!-- </text> -->
   <!-- </g> -->
   <g>
-    <image preserveAspectRatio="none" width="30" height="30" xlink:href="assets/g_aperture.svg" id="image1-3" x="340.00" y="10" />
-    <text x="380" y="35" class="info">
+    <image preserveAspectRatio="none" width="30" height="30" xlink:href="assets/g_aperture.svg" id="image1-3" x="340.00" y="5" />
+    <text x="380" y="27" class="info">
       {{aperture}}
     </text>
   </g>
   <g>
-    <image preserveAspectRatio="none" width="30" height="30" xlink:href="assets/g_shutter-speed.svg" id="image1-3" x="520.00" y="10" />
-    <text x="560" y="35" class="info">
+    <image preserveAspectRatio="none" width="30" height="30" xlink:href="assets/g_shutter-speed.svg" id="image1-3" x="520.00" y="5" />
+    <text x="560" y="27" class="info">
      {{shutter_speed}}
     </text>
   </g>
   <g>
-    <image preserveAspectRatio="none" width="30" height="30" xlink:href="assets/g_lens.svg" id="image1-3" x="680.00" y="10" />
-    <text x="720" y="35" class="info">
+    <image preserveAspectRatio="none" width="30" height="30" xlink:href="assets/g_lens.svg" id="image1-3" x="680.00" y="5" />
+    <text x="720" y="27" class="info">
      {{focal_length}}
     </text>
   </g>
   <g>
-    <image preserveAspectRatio="none" width="30" height="30" xlink:href="assets/g_lens.svg" id="image1" x="10" y="10" />
-    <text x="50" y="35" class="info">
+    <image preserveAspectRatio="none" width="30" height="30" xlink:href="assets/g_lens.svg" id="image1" x="220" y="5" />
+    <text x="250" y="27" class="info">
      {{iso}}
     </text>
   </g>
