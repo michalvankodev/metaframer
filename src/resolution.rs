@@ -51,7 +51,7 @@ pub fn get_frame_width(
     resolution: Resolution,
     is_portrait: bool,
     (o_width, o_height): (u32, u32),
-    frame_height: u8,
+    excluded_height: u8,
 ) -> u32 {
     let frame_dimensions = resolution.dimensions();
 
@@ -59,12 +59,12 @@ pub fn get_frame_width(
     let (width, height) = if is_portrait {
         (
             frame_dimensions.1,
-            frame_dimensions.0 - u32::from(frame_height),
+            frame_dimensions.0 - u32::from(excluded_height),
         )
     } else {
         (
             frame_dimensions.0,
-            frame_dimensions.1 - u32::from(frame_height),
+            frame_dimensions.1 - u32::from(excluded_height),
         )
     };
 

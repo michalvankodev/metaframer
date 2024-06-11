@@ -23,6 +23,9 @@ struct CliArgs {
 
     #[arg(long = "height", default_value_t = 40)]
     frame_height: u8,
+
+    #[arg(short, long)]
+    inset: bool,
 }
 
 fn main() -> Result<()> {
@@ -60,12 +63,8 @@ fn main() -> Result<()> {
     }
 
     let dimensions = image::image_dimensions(path.clone())?;
-    let frame_width = get_frame_width(
-        args.resolution,
-        args.portrait,
-        dimensions,
-        args.frame_height,
-    );
+    let excluded_height = if args.inset { 0 } else { args.frame_height };
+    let frame_width = get_frame_width(args.resolution, args.portrait, dimensions, excluded_height);
     let frame_data = framer::get_frame_data(frame_width, &exif)?;
 
     let mut output_file = File::create(get_frame_path(&path))?;
