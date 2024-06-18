@@ -13,6 +13,14 @@
     }
   </style>
   <rect width="{{width}}" height="{{height}}" fill="#ffffff"></rect> 
+  {{#each info_value}}
+  <g>
+    <image preserveAspectRatio="none" width="30" height="30" xlink:href="assets/g_camera.svg" id="image1" x="{{image_position}}" y="5" />
+    <text x="text_position" y="27" class="info">
+     {{text}}
+    </text>
+  </g>
+  {{/each}}
   <g>
     <image preserveAspectRatio="none" width="30" height="30" xlink:href="assets/g_camera.svg" id="image1" x="10" y="5" />
     <text x="50" y="27" class="info">

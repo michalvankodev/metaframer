@@ -42,6 +42,8 @@ fn main() -> Result<()> {
             )
         })?;
 
+    // handlebars.register_partial( )
+
     println!("File: {:?}", args.path);
     println!("Resolution: {:?}", args.resolution);
 
