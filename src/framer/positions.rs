@@ -5,19 +5,10 @@ use super::{
     FrameSettings,
 };
 
-#[derive(Serialize, Debug, PartialEq)]
-pub struct Positions {
-    /// Vector of the `x` positions of icons in their order of display
-    icons: Vec<i32>,
-
-    /// Vector of the `x` positions of the labels/values in their order of display
-    values: Vec<i32>,
-}
-
 #[derive(Serialize, Debug, PartialEq, Clone)]
 pub struct PositionedValue {
     text_position: i32,
-    image_position: i32,
+    icon_position: i32,
     text: String,
     value_key: TextValuesKeys,
 }
@@ -69,7 +60,7 @@ fn get_left_aligned_positions<'a>(
 
         positioned_values.push(PositionedValue {
             text_position,
-            image_position: icon_position,
+            icon_position,
             text: text_values.get_property(&prop).clone(),
             value_key: prop.clone(),
         })
@@ -94,7 +85,7 @@ fn get_right_aligned_positions(
     for prop in reversed_order {
         let last_icon_position = positioned_values
             .last()
-            .map_or(&0, |value| &value.image_position);
+            .map_or(&0, |value| &value.icon_position);
 
         let text = text_values.get_property(&prop).clone();
         let text_size = text.len();
@@ -103,7 +94,7 @@ fn get_right_aligned_positions(
 
         positioned_values.push(PositionedValue {
             text_position,
-            image_position: icon_position,
+            icon_position,
             text,
             value_key: prop.clone(),
         })
@@ -111,7 +102,7 @@ fn get_right_aligned_positions(
 
     positioned_values.iter_mut().for_each(|value| {
         value.text_position = width as i32 - value.text_position;
-        value.image_position = width as i32 - value.image_position
+        value.icon_position = width as i32 - value.icon_position
     });
     positioned_values.reverse();
 
@@ -161,31 +152,31 @@ fn test_get_left_aligned_positions() {
     let expected_positions = vec![
         PositionedValue {
             text_position: first_value,
-            image_position: 10,
+            icon_position: 10,
             text: text_values.camera.clone(),
             value_key: TextValuesKeys::Camera,
         },
         PositionedValue {
             text_position: second_value,
-            image_position: second_icon,
+            icon_position: second_icon,
             text: text_values.aperture.clone(),
             value_key: TextValuesKeys::Aperture,
         },
         PositionedValue {
             text_position: third_value,
-            image_position: third_icon,
+            icon_position: third_icon,
             text: text_values.shutter_speed.clone(),
             value_key: TextValuesKeys::ShutterSpeed,
         },
         PositionedValue {
             text_position: fourth_value,
-            image_position: fourth_icon,
+            icon_position: fourth_icon,
             text: text_values.focal_length.clone(),
             value_key: TextValuesKeys::FocalLength,
         },
         PositionedValue {
             text_position: fifth_value,
-            image_position: fifth_icon,
+            icon_position: fifth_icon,
             text: text_values.iso.clone(),
             value_key: TextValuesKeys::Iso,
         },
@@ -249,25 +240,25 @@ fn test_get_right_aligned_positions() {
     let expected_positions = vec![
         PositionedValue {
             text_position: values[0],
-            image_position: icons[0],
+            icon_position: icons[0],
             text: text_values.aperture.clone(),
             value_key: TextValuesKeys::Aperture,
         },
         PositionedValue {
             text_position: values[1],
-            image_position: icons[1],
+            icon_position: icons[1],
             text: text_values.shutter_speed.clone(),
             value_key: TextValuesKeys::ShutterSpeed,
         },
         PositionedValue {
             text_position: values[2],
-            image_position: icons[2],
+            icon_position: icons[2],
             text: text_values.focal_length.clone(),
             value_key: TextValuesKeys::FocalLength,
         },
         PositionedValue {
             text_position: values[3],
-            image_position: icons[3],
+            icon_position: icons[3],
             text: text_values.iso.clone(),
             value_key: TextValuesKeys::Iso,
         },
