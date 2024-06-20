@@ -12,7 +12,7 @@ mod resolution;
 #[derive(Parser)]
 #[command(version, about, long_about = None)] // Read from `Cargo.toml`
 struct CliArgs {
-    path: std::path::PathBuf,
+    paths: Vec<std::path::PathBuf>,
 
     /// Resolution to which the frame should be adjusted, width of the generated frame would be calculated according to this value
     #[arg(short, long, value_enum, default_value = "1080p")]
@@ -32,7 +32,7 @@ fn main() -> Result<()> {
     let args = CliArgs::parse();
 
     let mut handlebars = Handlebars::new();
-    // TODO use custom templates
+    // TODO use custom templates ... like custom from .config/file
     handlebars
         .register_template_file("default", "./src/templates/default.svg")
         .with_context(|| {
@@ -42,35 +42,78 @@ fn main() -> Result<()> {
             )
         })?;
 
-    // handlebars.register_partial( )
+    handlebars
+        .register_template_file("Camera", "./src/templates/camera-icon.svg")
+        .with_context(|| {
+            format!(
+                "could not read template file`{:?}`",
+                "camera-icon.svg".to_string()
+            )
+        })?;
 
-    println!("File: {:?}", args.path);
+    handlebars
+        .register_template_file("Aperture", "./src/templates/aperture-icon.svg")
+        .with_context(|| {
+            format!(
+                "could not read template file`{:?}`",
+                "aperture-icon.svg".to_string()
+            )
+        })?;
+    handlebars
+        .register_template_file("ShutterSpeed", "./src/templates/shutter-speed-icon.svg")
+        .with_context(|| {
+            format!(
+                "could not read template file`{:?}`",
+                "shutter-speed-icon.svg".to_string()
+            )
+        })?;
+    handlebars
+        .register_template_file("FocalLength", "./src/templates/focal-length-icon.svg")
+        .with_context(|| {
+            format!(
+                "could not read template file`{:?}`",
+                "focal-length-icon.svg".to_string()
+            )
+        })?;
+    handlebars
+        .register_template_file("Iso", "./src/templates/iso-icon.svg")
+        .with_context(|| {
+            format!(
+                "could not read template file`{:?}`",
+                "iso-icon.svg".to_string()
+            )
+        })?;
+    println!("Files: {:?}", args.paths);
     println!("Resolution: {:?}", args.resolution);
 
-    let path = args.path;
-    let file = File::open(path.clone())
-        .with_context(|| format!("could not read file `{:?}`", path.clone()))?;
-    let mut bufreader = BufReader::new(&file);
-    let exifreader = exif::Reader::new();
-    let exif = exifreader
-        .read_from_container(&mut bufreader)
-        .with_context(|| format!("file `{:?}` is not a valid image", path.clone()))?;
-    for f in exif.fields() {
-        println!(
-            "{} {} {}",
-            f.tag,
-            f.ifd_num,
-            f.display_value().with_unit(&exif)
-        );
+    let paths = args.paths;
+
+    for path in paths {
+        let file = File::open(path.clone())
+            .with_context(|| format!("could not read file `{:?}`", path.clone()))?;
+        let mut bufreader = BufReader::new(&file);
+        let exifreader = exif::Reader::new();
+        let exif = exifreader
+            .read_from_container(&mut bufreader)
+            .with_context(|| format!("file `{:?}` is not a valid image", path.clone()))?;
+        for f in exif.fields() {
+            println!(
+                "{} {} {}",
+                f.tag,
+                f.ifd_num,
+                f.display_value().with_unit(&exif)
+            );
+        }
+
+        let dimensions = image::image_dimensions(path.clone())?;
+        let excluded_height = if args.inset { 0 } else { args.frame_height };
+        let frame_width =
+            get_frame_width(args.resolution, args.portrait, dimensions, excluded_height);
+        let frame_data = framer::get_frame_data((frame_width, args.frame_height as u32), &exif)?;
+
+        let mut output_file = File::create(get_frame_path(&path))?;
+        handlebars.render_to_write("default", &frame_data, &mut output_file)?;
     }
-
-    let dimensions = image::image_dimensions(path.clone())?;
-    let excluded_height = if args.inset { 0 } else { args.frame_height };
-    let frame_width = get_frame_width(args.resolution, args.portrait, dimensions, excluded_height);
-    let frame_data = framer::get_frame_data((frame_width, args.frame_height as u32), &exif)?;
-
-    let mut output_file = File::create(get_frame_path(&path))?;
-    handlebars.render_to_write("default", &frame_data, &mut output_file)?;
 
     Ok(())
 }

@@ -46,7 +46,7 @@ pub fn get_text_values(exif: &Exif) -> TextValues {
 pub fn get_shutter_speed(exif: &Exif) -> String {
     let field = exif.get_field(Tag::ExposureTime, In::PRIMARY);
     match field {
-        Some(value) => format!("{}", value.display_value().with_unit(exif)),
+        Some(value) => format!("{}", value.display_value().with_unit(exif)).replace(" ", ""),
         None => "N/A".to_string(),
     }
 }
@@ -62,7 +62,7 @@ pub fn get_aperture(exif: &Exif) -> String {
 pub fn get_focal_length(exif: &Exif) -> String {
     let field = exif.get_field(Tag::FocalLength, In::PRIMARY);
     match field {
-        Some(value) => format!("{}", value.display_value().with_unit(exif)),
+        Some(value) => format!("{}", value.display_value().with_unit(exif)).replace(" ", ""),
         None => "N/A".to_string(),
     }
 }

@@ -20,9 +20,10 @@ pub fn get_positions(
     right_display_order: &Vec<TextValuesKeys>,
 ) -> Vec<PositionedValue> {
     let frame_settings = FrameSettings {
-        border: 10,
+        inner_border: 5,
+        outer_border: 10,
         icon_size: 30,
-        letter_width: 10,
+        letter_width: 12,
     };
 
     let left_positions =
@@ -38,7 +39,8 @@ pub fn get_positions(
 fn get_left_aligned_positions<'a>(
     FrameSettings {
         letter_width,
-        border,
+        inner_border,
+        outer_border,
         icon_size,
     }: &FrameSettings,
     text_values: &TextValues,
@@ -51,11 +53,14 @@ fn get_left_aligned_positions<'a>(
             Some(last_value) => {
                 let last_text_len = last_value.text.len() as i32;
                 let next_icon_position =
-                    last_value.text_position + last_text_len * letter_width + border;
-                let next_text_position = next_icon_position + icon_size + border;
+                    last_value.text_position + last_text_len * letter_width + outer_border;
+                let next_text_position = next_icon_position + icon_size + inner_border;
                 (next_icon_position, next_text_position)
             }
-            None => (border.clone(), border + icon_size + border),
+            None => (
+                outer_border.clone(),
+                outer_border + icon_size + inner_border,
+            ),
         };
 
         positioned_values.push(PositionedValue {
@@ -72,7 +77,8 @@ fn get_left_aligned_positions<'a>(
 fn get_right_aligned_positions(
     FrameSettings {
         letter_width,
-        border,
+        inner_border,
+        outer_border,
         icon_size,
     }: &FrameSettings,
     text_values: &TextValues,
@@ -89,8 +95,8 @@ fn get_right_aligned_positions(
 
         let text = text_values.get_property(&prop).clone();
         let text_size = text.len();
-        let text_position = last_icon_position + border + text_size as i32 * letter_width;
-        let icon_position = text_position + border + icon_size;
+        let text_position = last_icon_position + outer_border + text_size as i32 * letter_width;
+        let icon_position = text_position + inner_border + icon_size;
 
         positioned_values.push(PositionedValue {
             text_position,
@@ -112,13 +118,15 @@ fn get_right_aligned_positions(
 #[test]
 fn test_get_left_aligned_positions() {
     let frame_settings = FrameSettings {
-        border: 10,
+        inner_border: 5,
+        outer_border: 10,
         icon_size: 30,
         letter_width: 10,
     };
     let FrameSettings {
         letter_width,
-        border,
+        inner_border,
+        outer_border,
         icon_size,
     } = frame_settings;
 
@@ -139,15 +147,15 @@ fn test_get_left_aligned_positions() {
     ];
 
     // 14 * 10 + borders
-    let first_value = border + icon_size + border;
-    let second_icon = first_value + 14 * letter_width + border;
-    let second_value = second_icon + icon_size + border;
-    let third_icon = second_value + 3 * letter_width + border;
-    let third_value = third_icon + icon_size + border;
-    let fourth_icon = third_value + 6 * letter_width + border;
-    let fourth_value = fourth_icon + icon_size + border;
-    let fifth_icon = fourth_value + 6 * letter_width + border;
-    let fifth_value = fifth_icon + icon_size + border;
+    let first_value = outer_border + icon_size + inner_border;
+    let second_icon = first_value + 14 * letter_width + outer_border;
+    let second_value = second_icon + icon_size + inner_border;
+    let third_icon = second_value + 3 * letter_width + outer_border;
+    let third_value = third_icon + icon_size + inner_border;
+    let fourth_icon = third_value + 6 * letter_width + outer_border;
+    let fourth_value = fourth_icon + icon_size + inner_border;
+    let fifth_icon = fourth_value + 6 * letter_width + outer_border;
+    let fifth_value = fifth_icon + icon_size + inner_border;
 
     let expected_positions = vec![
         PositionedValue {
@@ -191,13 +199,15 @@ fn test_get_left_aligned_positions() {
 #[test]
 fn test_get_right_aligned_positions() {
     let frame_settings = FrameSettings {
-        border: 10,
+        inner_border: 5,
+        outer_border: 10,
         icon_size: 30,
         letter_width: 10,
     };
     let FrameSettings {
         letter_width,
-        border,
+        inner_border,
+        outer_border,
         icon_size,
     } = frame_settings;
 
@@ -217,14 +227,14 @@ fn test_get_right_aligned_positions() {
     ];
     let width = 1000;
 
-    let first_value = border + letter_width * 4;
-    let first_icon = first_value + border + icon_size;
-    let second_value = first_icon + border + letter_width * 6;
-    let second_icon = second_value + border + icon_size;
-    let third_value = second_icon + border + letter_width * 6;
-    let third_icon = third_value + border + icon_size;
-    let fourth_value = third_icon + border + letter_width * 3;
-    let fourth_icon = fourth_value + border + icon_size;
+    let first_value = outer_border + letter_width * 4;
+    let first_icon = first_value + inner_border + icon_size;
+    let second_value = first_icon + outer_border + letter_width * 6;
+    let second_icon = second_value + inner_border + icon_size;
+    let third_value = second_icon + outer_border + letter_width * 6;
+    let third_icon = third_value + inner_border + icon_size;
+    let fourth_value = third_icon + outer_border + letter_width * 3;
+    let fourth_icon = fourth_value + inner_border + icon_size;
 
     let mut icons: Vec<i32> = vec![first_icon, second_icon, third_icon, fourth_icon]
         .iter()

@@ -11,51 +11,17 @@
       font-family: 'IntelOne Mono';
       fill: #375978;
     }
+    svg {
+      fill: #375978;
+    }
   </style>
   <rect width="{{width}}" height="{{height}}" fill="#ffffff"></rect> 
   {{#each values}}
   <g>
-    <image preserveAspectRatio="none" width="30" height="30" xlink:href="assets/g_camera.svg" id="image1" x="{{icon_position}}" y="5" />
+    {{> (lookup this 'value_key')  x=icon_position y=6 width=30 height=30 }}
     <text x="{{text_position}}" y="27" class="info">
-     {{text}}
+      {{text}}
     </text>
   </g>
   {{/each}}
-  <!-- <g> -->
-    <!-- <image preserveAspectRatio="none" width="30" height="30" xlink:href="assets/g_camera.svg" id="image1" x="10" y="5" /> -->
-    <!-- <text x="50" y="27" class="info"> -->
-     <!-- {{camera}} -->
-    <!-- </text> -->
-  <!-- </g> -->
-  <!-- <g> -->
-    <!-- <image preserveAspectRatio="none" width="30" height="30" xlink:href="assets/g_lens.svg" id="image1" x="10" y="5" /> -->
-    <!-- <text x="50" y="27" class="info"> -->
-     <!-- {{lens}} -->
-    <!-- </text> -->
-  <!-- </g> -->
-  <!-- <g> -->
-    <!-- <image preserveAspectRatio="none" width="30" height="30" xlink:href="assets/g_aperture.svg" id="image1-3" x="340.00" y="5" /> -->
-    <!-- <text x="380" y="27" class="info"> -->
-      <!-- {{aperture}} -->
-    <!-- </text> -->
-  <!-- </g> -->
-  <!-- <g> -->
-    <!-- <image preserveAspectRatio="none" width="30" height="30" xlink:href="assets/g_shutter-speed.svg" id="image1-3" x="520.00" y="5" /> -->
-    <!-- <text x="560" y="27" class="info"> -->
-     <!-- {{shutter_speed}} -->
-    <!-- </text> -->
-  <!-- </g> -->
-  <!-- <g> -->
-    <!-- <image preserveAspectRatio="none" width="30" height="30" xlink:href="assets/g_lens.svg" id="image1-3" x="680.00" y="5" /> -->
-    <!-- <text x="720" y="27" class="info"> -->
-     <!-- {{focal_length}} -->
-    <!-- </text> -->
-  <!-- </g> -->
-  <!-- <g> -->
-    <!-- <image preserveAspectRatio="none" width="30" height="30" xlink:href="assets/g_lens.svg" id="image1" x="220" y="5" /> -->
-    <!-- <text x="250" y="27" class="info"> -->
-     <!-- {{iso}} -->
-    <!-- </text> -->
-  <!-- </g> -->
 </svg>
-<!-- TODO Images have to be inlined -->

@@ -12,7 +12,8 @@ use self::{
 
 pub struct FrameSettings {
     letter_width: i32,
-    border: i32,
+    inner_border: i32,
+    outer_border: i32,
     icon_size: i32,
 }
 
