@@ -1,4 +1,5 @@
 use exif::{Exif, In, Tag};
+use regex::Regex;
 use serde::Serialize;
 
 #[derive(Serialize)]
@@ -45,8 +46,12 @@ pub fn get_text_values(exif: &Exif) -> TextValues {
 
 pub fn get_shutter_speed(exif: &Exif) -> String {
     let field = exif.get_field(Tag::ExposureTime, In::PRIMARY);
+    let regexp = Regex::new(r"\.\d+").unwrap();
     match field {
-        Some(value) => format!("{}", value.display_value().with_unit(exif)).replace(" ", ""),
+        Some(value) => {
+            let formatted = format!("{}", value.display_value().with_unit(exif)).replace(" ", "");
+            regexp.replace(&formatted, "").to_string()
+        }
         None => "N/A".to_string(),
     }
 }
