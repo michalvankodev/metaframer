@@ -2,6 +2,14 @@
 name = "metaframer"
 version = "0.1.0"
 edition = "2021"
+authors = ["Michal Vanko <mklakakilli@gmail.com>"]
+license = "MIT"
+description = "Metaframer is a tool to generate frames for images from their metadata"
+readme = "README.md"
+homepage = "https://github.com/michalvankodev/metaframer"
+repository = "https://github.com/michalvankodev/metaframer"
+keywords = ["cli", "frame", "watermark", "exif", "metadata", "images", "photos", "generator"]
+categories = ["command-line-utilities"]
 
 [dependencies]
 anyhow = "1.0.86"
