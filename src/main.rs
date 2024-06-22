@@ -20,12 +20,15 @@ struct CliArgs {
     #[arg(short, long, value_enum, default_value = "1080p")]
     resolution: Resolution,
 
+    /// Instructs metaframer to generate frames to be used in targetted portraits
     #[arg(short, long)]
     portrait: bool,
 
+    /// Height that should be taken by the frame
     #[arg(long = "height", default_value_t = 40)]
     frame_height: u8,
 
+    /// Specifies whether generated frames will not take any height of the target
     #[arg(short, long)]
     inset: bool,
 
