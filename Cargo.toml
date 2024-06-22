@@ -8,7 +8,7 @@ description = "Metaframer is a tool to generate frames for images from their met
 readme = "README.md"
 homepage = "https://github.com/michalvankodev/metaframer"
 repository = "https://github.com/michalvankodev/metaframer"
-keywords = ["cli", "frame", "watermark", "exif", "metadata", "images", "photos", "generator"]
+keywords = ["cli", "watermark", "exif", "images", "generator"]
 categories = ["command-line-utilities"]
 
 [build-dependencies]
