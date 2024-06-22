@@ -1,6 +1,7 @@
 use anyhow::{Context, Result};
 use clap::Parser;
 use handlebars::Handlebars;
+use log::{debug, error};
 use resolution::Resolution;
 use std::{fs::File, io::BufReader, path::PathBuf};
 
@@ -26,10 +27,16 @@ struct CliArgs {
 
     #[arg(short, long)]
     inset: bool,
+
+    #[command(flatten)]
+    verbose: clap_verbosity_flag::Verbosity,
 }
 
 fn main() -> Result<()> {
     let args = CliArgs::parse();
+    env_logger::Builder::new()
+        .filter_level(args.verbose.log_level_filter())
+        .init();
 
     let mut handlebars = Handlebars::new();
     // TODO use custom templates ... like custom from .config/file
@@ -83,8 +90,8 @@ fn main() -> Result<()> {
                 "iso-icon.svg".to_string()
             )
         })?;
-    println!("Files: {:?}", args.paths);
-    println!("Resolution: {:?}", args.resolution);
+    debug!("Files: {:?}", args.paths);
+    debug!("Resolution: {:?}", args.resolution);
 
     let paths = args.paths.clone();
 
@@ -92,7 +99,7 @@ fn main() -> Result<()> {
         match process_file(&handlebars, &args, path) {
             Ok(..) => {}
             Err(error) => {
-                eprintln!("{:?}", error)
+                error!("{:?}", error)
             }
         }
     }
@@ -118,7 +125,7 @@ fn process_file(handlebars: &Handlebars<'_>, args: &CliArgs, path: &PathBuf) -> 
         .read_from_container(&mut bufreader)
         .with_context(|| format!("file `{:?}` is not a valid image", path.clone()))?;
     for f in exif.fields() {
-        println!(
+        debug!(
             "{} {} {}",
             f.tag,
             f.ifd_num,

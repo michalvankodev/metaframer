@@ -7,10 +7,13 @@ edition = "2021"
 anyhow = "1.0.86"
 assert_cmd = "2.0.14"
 clap = { version = "4", features = ["derive"] }
+clap-verbosity-flag = "2.2.0"
 clap_derive = { version = "4.0.0-rc.1" } 
+env_logger = "0.11.3"
 handlebars = "5.1.2"
 image = "0.25.1"
 kamadak-exif = "0.5.5"
+log = "0.4.21"
 predicates = "3.1.0"
 regex = "1.10.5"
 serde = { version = "1.0.202", features = ["derive"] }

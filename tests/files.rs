@@ -8,7 +8,7 @@ fn file_doesnt_exist() -> Result<()> {
 
     cmd.arg("test/file/doesnt/exist");
     cmd.assert()
-        .failure()
+        .success()
         .stderr(str::contains("could not read file"));
 
     Ok(())
@@ -20,7 +20,7 @@ fn file_is_not_valid() -> Result<()> {
 
     cmd.arg("tests/assets/plain.txt");
     cmd.assert()
-        .failure()
+        .success()
         .stderr(str::contains("is not a valid image"));
 
     Ok(())

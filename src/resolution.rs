@@ -81,21 +81,23 @@ pub fn get_frame_width(
 
 #[test]
 fn test_get_frame_width_with_portrait_for_landscape() {
+    use log::debug;
     let portrait_dimensions = (760, 1280);
     let frame_width = get_frame_width(Resolution::FullHD, false, portrait_dimensions, 40);
     let x = (1080. - 40.) / 1280.0;
     let expected_width = 760. * x;
-    println!("expected width: {}", expected_width);
+    debug!("expected width: {}", expected_width);
     assert_eq!(frame_width, expected_width as u32)
 }
 
 #[test]
 fn test_get_frame_width_with_portrait_for_portait() {
+    use log::debug;
     let portrait_dimensions = (760, 1280);
     let frame_width = get_frame_width(Resolution::FullHD, true, portrait_dimensions, 40);
     let x = (1920. - 40.) / 1280.;
     let expected_width = 760. * x;
-    println!("expected width: {}", expected_width);
+    debug!("expected width: {}", expected_width);
     assert_eq!(frame_width, expected_width as u32)
 }
 
@@ -135,10 +137,11 @@ fn test_get_frame_width_with_landscape_for_portrait_with_bigger_img() {
 
 #[test]
 fn test_get_frame_width_with_portrait_for_landscape_with_bigger_img() {
+    use log::debug;
     let portrait_dimensions = (2080, 3800);
     let frame_width = get_frame_width(Resolution::FullHD, false, portrait_dimensions, 40);
     let x = (1080. - 40.) / 3800.0;
     let expected_width = 2080. * x;
-    println!("expected width: {}", expected_width);
+    debug!("expected width: {}", expected_width);
     assert_eq!(frame_width, expected_width as u32)
 }
