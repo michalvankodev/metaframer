@@ -1,5 +1,6 @@
 use anyhow::{Context, Result};
 use clap::Parser;
+use dirs::{self, config_dir};
 use handlebars::Handlebars;
 use log::{debug, error};
 use resolution::Resolution;
@@ -38,28 +39,34 @@ fn main() -> Result<()> {
         .filter_level(args.verbose.log_level_filter())
         .init();
 
+    let config_dir = config_dir().unwrap();
+    let templates_path = config_dir.join("metaframer/templates");
+    debug!("{:?} templates path", templates_path);
+
     let mut handlebars = Handlebars::new();
     // TODO use custom templates ... like custom from .config/file
     handlebars
-        .register_template_file("default", "./src/templates/default.svg")
+        .register_template_file("default", templates_path.join("default.svg"))
         .with_context(|| {
             format!(
-                "could not read template file`{:?}`",
-                "default.svg".to_string()
+                "could not read template file`{:?}` in `{:?}`",
+                "default.svg".to_string(),
+                templates_path
             )
         })?;
 
     handlebars
-        .register_template_file("Camera", "./src/templates/camera-icon.svg")
+        .register_template_file("Camera", templates_path.join("camera-icon.svg"))
         .with_context(|| {
             format!(
-                "could not read template file`{:?}`",
-                "camera-icon.svg".to_string()
+                "could not read template file`{:?}` in {:?}",
+                "camera-icon.svg".to_string(),
+                templates_path
             )
         })?;
 
     handlebars
-        .register_template_file("Aperture", "./src/templates/aperture-icon.svg")
+        .register_template_file("Aperture", templates_path.join("aperture-icon.svg"))
         .with_context(|| {
             format!(
                 "could not read template file`{:?}`",
@@ -67,7 +74,10 @@ fn main() -> Result<()> {
             )
         })?;
     handlebars
-        .register_template_file("ShutterSpeed", "./src/templates/shutter-speed-icon.svg")
+        .register_template_file(
+            "ShutterSpeed",
+            templates_path.join("shutter-speed-icon.svg"),
+        )
         .with_context(|| {
             format!(
                 "could not read template file`{:?}`",
@@ -75,7 +85,7 @@ fn main() -> Result<()> {
             )
         })?;
     handlebars
-        .register_template_file("FocalLength", "./src/templates/focal-length-icon.svg")
+        .register_template_file("FocalLength", templates_path.join("focal-length-icon.svg"))
         .with_context(|| {
             format!(
                 "could not read template file`{:?}`",
@@ -83,7 +93,7 @@ fn main() -> Result<()> {
             )
         })?;
     handlebars
-        .register_template_file("Iso", "./src/templates/iso-icon.svg")
+        .register_template_file("Iso", templates_path.join("iso-icon.svg"))
         .with_context(|| {
             format!(
                 "could not read template file`{:?}`",
