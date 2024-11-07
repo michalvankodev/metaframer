@@ -33,6 +33,7 @@ jobs:
           shared-key: ${{matrix.target}}-cache
 
       - name: Compile binaries
+        shell: bash
         run: |
           cargo build --verbose --release
           if [ "${{ matrix.os }}" = "windows-latest" ]; then
