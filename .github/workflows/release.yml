@@ -44,10 +44,12 @@ jobs:
           echo "BIN=$bin" >> $GITHUB_ENV
 
       - name: Determine archive name
+        shell: bash
         run: |
           echo "ARCHIVE=metaframer-${{ github.event.tag_name }}-${{ matrix.target }}" >> $GITHUB_ENV
 
       - name: Create archive
+        shell: bash
         run: |
           mkdir -p "$ARCHIVE"
           cp "$BIN" "$ARCHIVE"/
@@ -72,6 +74,7 @@ jobs:
           echo "ASSET_SUM=$ARCHIVE.tar.gz.sha256" >> $GITHUB_ENV
 
       - name: Upload release archive
+        shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh release upload "${{ github.event.release.tag_name }}" ${{ env.ASSET }} ${{ env.ASSET_SUM }}
