@@ -28,7 +28,7 @@ pub fn get_frame_data(
     (width, height): (u32, u32),
     exif: &Exif,
 ) -> Result<FrameData, anyhow::Error> {
-    let text_values = get_text_values(&exif);
+    let text_values = get_text_values(exif);
     let left_display_order = vec![TextValuesKeys::Camera];
     let right_display_order = vec![
         TextValuesKeys::Aperture,
