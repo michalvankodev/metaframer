@@ -36,11 +36,11 @@ impl TextValues {
 
 pub fn get_text_values(exif: &Exif) -> TextValues {
     TextValues {
-        shutter_speed: get_shutter_speed(&exif),
-        aperture: get_aperture(&exif),
-        focal_length: get_focal_length(&exif),
-        camera: get_camera(&exif),
-        iso: get_iso(&exif),
+        shutter_speed: get_shutter_speed(exif),
+        aperture: get_aperture(exif),
+        focal_length: get_focal_length(exif),
+        camera: get_camera(exif),
+        iso: get_iso(exif),
     }
 }
 

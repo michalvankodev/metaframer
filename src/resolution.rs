@@ -5,6 +5,7 @@ pub enum Resolution {
     HD,
     FullHD,
     QuadHD,
+    #[allow(clippy::upper_case_acronyms)]
     UHD,
     FourK,
     EightK,
@@ -73,7 +74,7 @@ pub fn get_frame_width(
     match has_bigger_aspect_ratio {
         false => {
             let scale = f64::from(height) / f64::from(o_height);
-            return (scale * f64::from(o_width)) as u32;
+            (scale * f64::from(o_width)) as u32
         }
         true => width,
     }

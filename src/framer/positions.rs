@@ -16,8 +16,8 @@ pub struct PositionedValue {
 pub fn get_positions(
     text_values: &TextValues,
     width: u32,
-    left_display_order: &Vec<TextValuesKeys>,
-    right_display_order: &Vec<TextValuesKeys>,
+    left_display_order: &[TextValuesKeys],
+    right_display_order: &[TextValuesKeys],
 ) -> Vec<PositionedValue> {
     let frame_settings = FrameSettings {
         inner_border: 5,
@@ -27,16 +27,15 @@ pub fn get_positions(
     };
 
     let left_positions =
-        get_left_aligned_positions(&frame_settings, &text_values, left_display_order);
+        get_left_aligned_positions(&frame_settings, text_values, left_display_order);
 
     let right_positions =
-        get_right_aligned_positions(&frame_settings, &text_values, right_display_order, width);
+        get_right_aligned_positions(&frame_settings, text_values, right_display_order, width);
 
-    let positioned_values = [left_positions, right_positions].concat();
-    return positioned_values;
+    [left_positions, right_positions].concat()
 }
 
-fn get_left_aligned_positions<'a>(
+fn get_left_aligned_positions(
     FrameSettings {
         letter_width,
         inner_border,
@@ -44,7 +43,7 @@ fn get_left_aligned_positions<'a>(
         icon_size,
     }: &FrameSettings,
     text_values: &TextValues,
-    display_order: &Vec<TextValuesKeys>,
+    display_order: &[TextValuesKeys],
 ) -> Vec<PositionedValue> {
     let mut positioned_values: Vec<PositionedValue> = vec![];
 
@@ -57,21 +56,18 @@ fn get_left_aligned_positions<'a>(
                 let next_text_position = next_icon_position + icon_size + inner_border;
                 (next_icon_position, next_text_position)
             }
-            None => (
-                outer_border.clone(),
-                outer_border + icon_size + inner_border,
-            ),
+            None => (*outer_border, outer_border + icon_size + inner_border),
         };
 
         positioned_values.push(PositionedValue {
             text_position,
             icon_position,
-            text: text_values.get_property(&prop).clone(),
-            value_key: prop.clone(),
+            text: text_values.get_property(prop).clone(),
+            value_key: *prop,
         })
     }
 
-    return positioned_values;
+    positioned_values
 }
 
 fn get_right_aligned_positions(
@@ -82,7 +78,7 @@ fn get_right_aligned_positions(
         icon_size,
     }: &FrameSettings,
     text_values: &TextValues,
-    display_order: &Vec<TextValuesKeys>,
+    display_order: &[TextValuesKeys],
     width: u32,
 ) -> Vec<PositionedValue> {
     let mut positioned_values: Vec<PositionedValue> = vec![];
@@ -93,7 +89,7 @@ fn get_right_aligned_positions(
             .last()
             .map_or(&0, |value| &value.icon_position);
 
-        let text = text_values.get_property(&prop).clone();
+        let text = text_values.get_property(prop).clone();
         let text_size = text.len();
         let text_position = last_icon_position + outer_border + text_size as i32 * letter_width;
         let icon_position = text_position + inner_border + icon_size;
@@ -102,7 +98,7 @@ fn get_right_aligned_positions(
             text_position,
             icon_position,
             text,
-            value_key: prop.clone(),
+            value_key: *prop,
         })
     }
 
@@ -112,7 +108,7 @@ fn get_right_aligned_positions(
     });
     positioned_values.reverse();
 
-    return positioned_values;
+    positioned_values
 }
 
 #[test]
@@ -236,12 +232,12 @@ fn test_get_right_aligned_positions() {
     let fourth_value = third_icon + outer_border + letter_width * 3;
     let fourth_icon = fourth_value + inner_border + icon_size;
 
-    let mut icons: Vec<i32> = vec![first_icon, second_icon, third_icon, fourth_icon]
+    let mut icons: Vec<i32> = [first_icon, second_icon, third_icon, fourth_icon]
         .iter()
         .map(|offset| width - offset)
         .collect();
     icons.reverse();
-    let mut values: Vec<i32> = vec![first_value, second_value, third_value, fourth_value]
+    let mut values: Vec<i32> = [first_value, second_value, third_value, fourth_value]
         .iter()
         .map(|offset| width - offset)
         .collect();
